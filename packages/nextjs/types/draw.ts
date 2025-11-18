@@ -1,6 +1,6 @@
 import type { RarityKey } from '@/data/prizes';
 
-export type DrawState = 'encrypted' | 'decrypting' | 'decrypted';
+export type DrawState = 'encrypted' | 'decrypting' | 'decrypted' | 'error';
 
 export interface DrawEntry {
   drawId: number;
