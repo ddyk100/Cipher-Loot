@@ -421,15 +421,17 @@ export default function GamePage() {
 
     try {
       // Attempt connection depending on wallet type
-      if (walletId === 'metamask' && window.ethereum.isMetaMask) {
+      const ethereum = window.ethereum as any;
+      
+      if (walletId === 'metamask' && ethereum.isMetaMask) {
         await connectWallet();
-      } else if (walletId === 'coinbase' && window.ethereum.isCoinbaseWallet) {
+      } else if (walletId === 'coinbase' && ethereum.isCoinbaseWallet) {
         await connectWallet();
-      } else if (walletId === 'okx' && window.ethereum.isOkxWallet) {
+      } else if (walletId === 'okx' && ethereum.isOkxWallet) {
         await connectWallet();
-      } else if (walletId === 'trust' && window.ethereum.isTrust) {
+      } else if (walletId === 'trust' && ethereum.isTrust) {
         await connectWallet();
-      } else if (walletId === 'rabby' && window.ethereum.isRabby) {
+      } else if (walletId === 'rabby' && ethereum.isRabby) {
         await connectWallet();
       } else if (walletId === 'walletconnect') {
         // WalletConnect may need a dedicated flow; use generic connect for now
