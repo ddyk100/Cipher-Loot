@@ -887,7 +887,7 @@ function HistoryRow({ entry, onDecrypt, decryptDisabled }: HistoryRowProps) {
   // Helper to get rarity label (R / SR / SSR)
   const getRarityLabel = () => {
     if (entry.state !== 'decrypted') return entry.state;
-    const rarityKey = rarityByCode[entry.rarity];
+    const rarityKey = entry.rarity !== undefined ? rarityByCode[entry.rarity] : undefined;
     return rarityKey || 'Unknown';
   };
 
