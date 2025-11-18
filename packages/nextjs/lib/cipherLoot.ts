@@ -1,7 +1,7 @@
 export const SUPPORTED_CHAIN_ID = 11155111;
 
 export const CONTRACT_ADDRESSES: Record<number, string> = {
-  11155111: '0xc5A5FA28ed09eA41d979f545C0E7ADC9A8e2e68b', // Sepolia
+  11155111: '0xde33E2d0b0a10c0492Eb456C294589ceDcbB349f', // Sepolia
   31337: '0x0000000000000000000000000000000000000000', // Local (placeholder)
 };
 

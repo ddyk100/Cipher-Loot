@@ -27,7 +27,7 @@ Cipher Loot is an on-chain loot draw where players receive encrypted rewards tha
 - **Frontend**: Next.js 14 + Tailwind, custom Baroque theme, wallet modal, history state machine.  
 - **SDK**: `@fhevm-sdk` React hooks (wallet, FHE initialization, contract binding, batch decryption).  
 - **Smart Contract**: `packages/hardhat/contracts/CipherLoot.sol` – uses `FHE.randEuint16()`, `FHE.rem()`, `FHE.select()`, and encrypted storage per wallet.  
-- **Network**: Ethereum Sepolia, deployed contract `0xc5A5FA28ed09eA41d979f545C0E7ADC9A8e2e68b`.  
+- **Network**: Ethereum Sepolia, deployed contract `0xde33E2d0b0a10c0492Eb456C294589ceDcbB349f`.
 - **Relayer**: Zama Relayer SDK (`https://cdn.zama.org/relayer-sdk-js/0.3.0-5/relayer-sdk-js.umd.cjs`) for user-controlled decryptions.  
 
 ### Flow Diagram
