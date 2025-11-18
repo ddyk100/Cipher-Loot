@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd packages/nextjs && pnpm build",
+  "buildCommand": "pnpm --filter cipher-loot-web build",
   "installCommand": "pnpm install",
-  "devCommand": "cd packages/nextjs && pnpm dev",
+  "devCommand": "pnpm --filter cipher-loot-web dev",
   "framework": "nextjs",
   "outputDirectory": "packages/nextjs/.next"
 }
