@@ -13,6 +13,11 @@ const nextConfig = {
       path.resolve(__dirname, '../../node_modules'),
     ];
     
+    // Allow .js imports to resolve to .ts files (for @fhevm-sdk source)
+    config.resolve.extensionAlias = {
+      '.js': ['.ts', '.tsx', '.js', '.jsx'],
+    };
+    
     // Ignore optional peer dependencies that are not used in this project
     config.resolve.fallback = {
       ...config.resolve.fallback,
