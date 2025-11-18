@@ -57,7 +57,7 @@ export default function HomePage() {
               </Link>
               <a
                 className="btn-muted"
-                href="#"
+                href="https://github.com/ddyk100/Cipher-Loot"
                 target="_blank"
                 rel="noreferrer"
               >
