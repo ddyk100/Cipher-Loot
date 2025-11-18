@@ -73,7 +73,7 @@ export default function GamePage() {
 
   const activeChainId = chainId ?? SUPPORTED_CHAIN_ID;
   const contractAddress = getContractAddress(activeChainId);
-  const { contract: readContract } = useContract(contractAddress, CIPHER_LOOT_ABI);
+  const { contract: readContract } = useContract(contractAddress, CIPHER_LOOT_ABI as any);
 
   const isOnSupportedNetwork = chainId === undefined || chainId === SUPPORTED_CHAIN_ID || !!CONTRACT_ADDRESSES[chainId];
   const latestEntry = history[0] ?? null;
