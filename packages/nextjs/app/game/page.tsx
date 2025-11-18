@@ -384,17 +384,19 @@ export default function GamePage() {
   const checkWalletInstalled = useCallback((walletId: string): boolean => {
     if (typeof window === 'undefined' || !window.ethereum) return false;
     
+    const ethereum = window.ethereum as any;
+    
     switch (walletId) {
       case 'metamask':
-        return Boolean(window.ethereum.isMetaMask);
+        return Boolean(ethereum.isMetaMask);
       case 'coinbase':
-        return Boolean(window.ethereum.isCoinbaseWallet);
+        return Boolean(ethereum.isCoinbaseWallet);
       case 'okx':
-        return Boolean(window.ethereum.isOkxWallet);
+        return Boolean(ethereum.isOkxWallet);
       case 'trust':
-        return Boolean(window.ethereum.isTrust);
+        return Boolean(ethereum.isTrust);
       case 'rabby':
-        return Boolean(window.ethereum.isRabby);
+        return Boolean(ethereum.isRabby);
       case 'walletconnect':
         // WalletConnect does not require an extension, always return true
         return true;
