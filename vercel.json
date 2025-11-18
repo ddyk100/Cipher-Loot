@@ -1,5 +1,5 @@
 {
-  "buildCommand": "sh build.sh",
+  "buildCommand": "pnpm vercel:build",
   "outputDirectory": "packages/nextjs/.next",
   "framework": null,
   "installCommand": "pnpm install"
