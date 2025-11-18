@@ -207,6 +207,7 @@ export default function GamePage() {
     if (!isConnected) {
       resetAllStates();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run only once on mount
 
   // Handle disconnect triggered from the UI

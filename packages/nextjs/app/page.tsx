@@ -46,7 +46,7 @@ export default function HomePage() {
             {/* Subtitle */}
             <p className="max-w-xl text-sm leading-relaxed text-[#fffff0]/80 sm:text-base" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
               Draw mystery artifacts upon the Sepolia chain, preserve results in utmost privacy, 
-              and prove the immutable honesty of destiny's hand.
+              and prove the immutable honesty of destiny&apos;s hand.
             </p>
 
             {/* CTA Buttons */}
