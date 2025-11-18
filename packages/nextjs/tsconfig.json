@@ -24,6 +24,12 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@fhevm-sdk": [
+        "../fhevm-sdk/src/index.ts"
+      ],
+      "@fhevm-sdk/*": [
+        "../fhevm-sdk/src/*"
       ]
     },
     "target": "ES2017"
