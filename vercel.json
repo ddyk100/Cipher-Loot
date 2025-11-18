@@ -1,7 +1,6 @@
 {
-  "buildCommand": "pnpm -w run vercel:build",
-  "outputDirectory": "packages/nextjs/.next",
-  "framework": null,
-  "installCommand": "pnpm install"
+  "buildCommand": "pnpm sdk:build && pnpm --filter cipher-loot-web build",
+  "installCommand": "pnpm install",
+  "outputDirectory": "packages/nextjs/.next"
 }
 
