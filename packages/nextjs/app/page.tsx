@@ -2,11 +2,6 @@
 
 import Link from 'next/link';
 
-const stats = [
-  { label: 'Network', value: 'Sepolia' },
-  { label: 'Contract', value: '0xc5A5...e68b' },
-];
-
 export default function HomePage() {
   return (
     <main className="relative flex min-h-screen items-center overflow-hidden px-6 py-16 lg:px-12">
@@ -15,7 +10,7 @@ export default function HomePage() {
         <div className="absolute top-[10%] left-[15%] h-[600px] w-[600px] bg-[radial-gradient(circle,_rgba(197,227,216,0.1),_transparent_70%)]" />
         <div className="absolute top-[40%] right-[20%] h-[500px] w-[500px] bg-[radial-gradient(circle,_rgba(212,175,55,0.08),_transparent_70%)]" />
         <div className="absolute bottom-[5%] left-[40%] h-[550px] w-[550px] bg-[radial-gradient(circle,_rgba(142,197,176,0.09),_transparent_70%)]" />
-      </div>
+              </div>
 
       {/* Baroque corner ornaments - only at four corners */}
       <div className="absolute top-8 left-8 text-6xl opacity-25" style={{ color: '#c5e3d8', textShadow: '0 0 20px rgba(197, 227, 216, 0.4)' }}>❦</div>
@@ -116,18 +111,18 @@ export default function HomePage() {
                          style={{
                            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(205, 127, 50, 0.18) 10px, rgba(205, 127, 50, 0.18) 20px)'
                          }}>
-                    </div>
-                    
+                </div>
+
                     {/* Card content */}
                     <div className="relative z-10 h-full flex flex-col items-center justify-center p-6">
                       <div className="text-6xl font-black tracking-[0.35em] text-[#cd7f32] mb-5" style={{ fontFamily: 'Cinzel, serif', textShadow: '0 0 25px rgba(205, 127, 50, 0.9), 0 0 50px rgba(205, 127, 50, 0.4)' }}>
                         R
-                      </div>
+                              </div>
                       <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#cd7f32] to-transparent mb-4"></div>
                       <div className="text-xs text-[#cd7f32]/75 text-center uppercase tracking-[0.25em] font-semibold" style={{ fontFamily: 'Cinzel, serif' }}>
                         Common
-                      </div>
-                    </div>
+                            </div>
+              </div>
                   </div>
                 </div>
 
@@ -174,13 +169,13 @@ export default function HomePage() {
                          style={{
                            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.22) 10px, rgba(212, 175, 55, 0.22) 20px)'
                          }}>
-                    </div>
+                </div>
                     
                     {/* Card content */}
                     <div className="relative z-10 h-full flex flex-col items-center justify-center p-6">
                       <div className="text-6xl font-black tracking-[0.35em] text-[#d4af37] mb-5" style={{ fontFamily: 'Cinzel, serif', textShadow: '0 0 28px rgba(212, 175, 55, 1), 0 0 56px rgba(212, 175, 55, 0.5)' }}>
                         SR
-                      </div>
+                  </div>
                       <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mb-4"></div>
                       <div className="text-xs text-[#d4af37]/75 text-center uppercase tracking-[0.25em] font-semibold" style={{ fontFamily: 'Cinzel, serif' }}>
                         Rare
@@ -188,7 +183,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-
+                
                 {/* SSR Card - Top layer (leftmost, rotated left) */}
                 <div 
                   className="absolute group cursor-pointer"
@@ -242,7 +237,7 @@ export default function HomePage() {
                       <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#f4d35e] to-transparent mb-4"></div>
                       <div className="text-xs text-[#f4d35e]/75 text-center uppercase tracking-[0.25em] font-semibold" style={{ fontFamily: 'Cinzel, serif' }}>
                         Legendary
-                      </div>
+                  </div>
                     </div>
                   </div>
                 </div>
@@ -278,6 +273,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
   );
 }

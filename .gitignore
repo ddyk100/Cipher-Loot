@@ -1,16 +1,43 @@
+# Environment and secrets
 .env
+.env.*
 notebook
+
+# Dependencies
 node_modules
-.DS_Store
 packages/*/node_modules
-packages/*/.DS_Store
-packages/*/dist
-packages/*/.env
-packages/*/.turbo
-packages/*/coverage
+
+# Build outputs
 packages/*/.next
-tmp*
+packages/*/dist
+.next
+dist
+
+# Hardhat artifacts and cache
+packages/hardhat/artifacts
+packages/hardhat/cache
+packages/hardhat/types
+packages/hardhat/fhevmTemp
+artifacts
+cache
+
+# OS files
+.DS_Store
+packages/*/.DS_Store
+
+# IDE
 .vscode
+
+# Turbo
+packages/*/.turbo
+.turbo
+
+# Test coverage
+packages/*/coverage
+coverage
+
+# Temp files
+tmp*
 
 # NPX package folders (these are published separately as npm packages)
 create-fhevm-nextjs/

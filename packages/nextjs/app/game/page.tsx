@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import { useWallet, useFhevm, useDecrypt, useContract } from '@fhevm-sdk';
@@ -13,7 +13,7 @@ import {
   getContractAddress,
   shortAddress,
 } from '@/lib/cipherLoot';
-import { resolveLootCard, rarityByCode, rarityMeta } from '@/data/prizes';
+import { rarityByCode, rarityMeta } from '@/data/prizes';
 import type { DrawEntry } from '@/types/draw';
 
 const HISTORY_PAGE_SIZE = 25;
@@ -69,14 +69,13 @@ export default function GamePage() {
     error: walletError,
   } = useWallet();
   const { status: fheStatus, initialize: initializeFhevm, error: fheError } = useFhevm();
-  const { batchDecrypt, isDecrypting, error: decryptError } = useDecrypt();
+  const { batchDecrypt, isDecrypting } = useDecrypt();
 
   const activeChainId = chainId ?? SUPPORTED_CHAIN_ID;
   const contractAddress = getContractAddress(activeChainId);
   const { contract: readContract } = useContract(contractAddress, CIPHER_LOOT_ABI as any);
 
   const isOnSupportedNetwork = chainId === undefined || chainId === SUPPORTED_CHAIN_ID || !!CONTRACT_ADDRESSES[chainId];
-  const latestEntry = history[0] ?? null;
 
   const showToast = useCallback((tone: ToastState['tone'], message: string) => {
     setToast({ tone, message });
@@ -173,20 +172,16 @@ export default function GamePage() {
 
     const handleAccountsChanged = (accounts: string[]) => {
       if (accounts.length === 0) {
-        // Wallet disconnected from the wallet side
-        console.log('🔌 Wallet disconnected from wallet side');
         resetAllStates();
         disconnectWallet();
       }
     };
 
     const handleChainChanged = () => {
-      // Reload the page on chain change to fully reset state
       window.location.reload();
     };
 
     const handleDisconnect = () => {
-      console.log('🔌 Wallet disconnected');
       resetAllStates();
     };
 
@@ -217,10 +212,7 @@ export default function GamePage() {
   }, [disconnectWallet, resetAllStates]);
 
   const ensureSepolia = useCallback(async () => {
-    if (!window.ethereum) {
-      // No wallet detected - don't show an extra toast
-      return false;
-    }
+    if (!window.ethereum) return false;
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
@@ -235,30 +227,16 @@ export default function GamePage() {
             params: [SEPOLIA_NETWORK_CONFIG],
           });
           return true;
-        } catch (err) {
-          console.error(err);
+        } catch {
+          return false;
         }
       }
-      // Ask user to switch to Sepolia via wallet UI; no extra toast here
       return false;
     }
   }, []);
 
   const handleDraw = useCallback(async () => {
-    console.log('🎲 Draw button clicked');
-    console.log('contractAddress:', contractAddress);
-    console.log('isConnected:', isConnected);
-    console.log('chainId:', chainId);
-    
-    if (!window.ethereum) {
-      // Wallet extension not installed - handled by connect modal
-      return;
-    }
-    
-    if (!contractAddress) {
-      // No contract address configured - already visible in CONTRACT field
-      return;
-    }
+    if (!window.ethereum || !contractAddress) return;
     
     if (!isConnected) {
       await connectWallet();
@@ -266,7 +244,6 @@ export default function GamePage() {
     }
     
     if (chainId !== SUPPORTED_CHAIN_ID) {
-      // Try to switch network; wallet will display its own prompt
       const switched = await ensureSepolia();
       if (!switched) return;
     }
@@ -278,17 +255,13 @@ export default function GamePage() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, CIPHER_LOOT_ABI, signer);
-      console.log('📝 Calling contract.draw()...');
       const tx = await contract.draw();
-      console.log('⏳ Waiting for transaction...', tx.hash);
       await tx.wait();
-      console.log('✅ Transaction confirmed');
       setDrawSuccess(true);
-      setTimeout(() => setDrawSuccess(false), 3000); // hide success message after 3 seconds
-      // Reload history with the new draw (including tx hash)
+      setTimeout(() => setDrawSuccess(false), 3000);
       await loadHistory(tx.hash);
     } catch (error: any) {
-      console.error('❌ Draw failed:', error);
+      console.error(error);
       
       // Detect whether the transaction was cancelled by the user
       const isUserRejection = 
@@ -310,33 +283,20 @@ export default function GamePage() {
 
   const handleDecrypt = useCallback(
     async (entry: DrawEntry) => {
-      if (!window.ethereum || !contractAddress) {
-        // No contract configuration available - nothing to decrypt
-        return;
-      }
+      if (!window.ethereum || !contractAddress) return;
+      
       try {
         setHistory((prev) => prev.map((item) => (item.drawId === entry.drawId ? { ...item, state: 'decrypting' } : item)));
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         
-        // Batch-decrypt rarity and variant with a single signature
         const handles = [entry.rarityHandle, entry.variantHandle];
-        console.log('🔓 Decrypting handles:', handles);
         const decryptedValues = await batchDecrypt(handles, contractAddress, signer);
-        console.log('✅ Decrypted values:', decryptedValues);
         
         const rarityValue = decryptedValues[entry.rarityHandle];
         const variantValue = decryptedValues[entry.variantHandle];
-        console.log('📊 Rarity value:', rarityValue, 'type:', typeof rarityValue);
-        console.log('📊 Variant value:', variantValue, 'type:', typeof variantValue);
-        console.log('📊 Number(rarityValue):', Number(rarityValue));
-        console.log('📊 rarityByCode:', rarityByCode);
-        console.log('📊 rarityByCode[Number(rarityValue)]:', rarityByCode[Number(rarityValue)]);
-        
         const rarityKey = rarityByCode[Number(rarityValue)];
         const rarityMetaObj = rarityMeta[rarityKey];
-        console.log('📊 rarityKey:', rarityKey);
-        console.log('📊 rarityMetaObj:', rarityMetaObj);
         
         setHistory((prev) =>
           prev.map((item) =>
@@ -354,21 +314,17 @@ export default function GamePage() {
       } catch (error: any) {
         console.error(error);
         
-        // Detect whether the user cancelled the signing request
         const isUserRejection = 
-          error?.code === 4001 || // MetaMask user rejection
-          error?.code === 'ACTION_REJECTED' || // Ethers user rejection
+          error?.code === 4001 ||
+          error?.code === 'ACTION_REJECTED' ||
           error?.message?.toLowerCase().includes('user rejected') ||
           error?.message?.toLowerCase().includes('user denied') ||
           error?.message?.toLowerCase().includes('user cancelled');
         
-        // If the user cancelled, restore encrypted state without showing an error
         if (isUserRejection) {
           setHistory((prev) => prev.map((item) => (item.drawId === entry.drawId ? { ...item, state: 'encrypted' } : item)));
         } else {
-          // For other errors, show a temporary 'error' state
-          setHistory((prev) => prev.map((item) => (item.drawId === entry.drawId ? { ...item, state: 'error' as any } : item)));
-          // After 3 seconds, return the entry to encrypted state
+          setHistory((prev) => prev.map((item) => (item.drawId === entry.drawId ? { ...item, state: 'error' } : item)));
           setTimeout(() => {
             setHistory((prev) => prev.map((item) => (item.drawId === entry.drawId ? { ...item, state: 'encrypted' } : item)));
           }, 3000);
@@ -377,8 +333,6 @@ export default function GamePage() {
     },
     [batchDecrypt, contractAddress],
   );
-
-  const decryptableEntry = useMemo(() => history.find((entry) => entry.state !== 'decrypting'), [history]);
 
   // Detect whether a given wallet is installed
   const checkWalletInstalled = useCallback((walletId: string): boolean => {
@@ -437,11 +391,10 @@ export default function GamePage() {
         // WalletConnect may need a dedicated flow; use generic connect for now
         await connectWallet();
       } else {
-        // If a specific wallet is not detected, fall back to generic connect
         await connectWallet();
       }
-    } catch (error) {
-      console.error('Wallet connection failed:', error);
+    } catch {
+      // Wallet connection errors are handled by wallet UI
     }
   }, [checkWalletInstalled, connectWallet, showToast]);
 
@@ -852,69 +805,4 @@ export default function GamePage() {
     </div>
   );
 }
-
-function DecryptedCard({ entry }: { entry: DrawEntry }) {
-  const resolved = resolveLootCard(entry.rarity, entry.variant);
-  if (!resolved) return null;
-
-  return (
-    <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/0 p-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="text-xs uppercase tracking-[0.5em] text-slate-400">{resolved.rarity.title}</p>
-          <p className="text-3xl font-semibold text-white">{resolved.card.name}</p>
-          <p className="text-sm text-slate-300">{resolved.card.description}</p>
-        </div>
-        <div className="text-right text-sm text-slate-400">
-          <p className="text-xs uppercase tracking-wide">Draw #{entry.drawId}</p>
-          <p className="text-4xl font-bold" style={{ color: resolved.rarity.accent }}>
-            {resolved.rarity.key}
-          </p>
-          <p className="mt-1 text-xs">{new Date(entry.timestamp).toLocaleString()}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-interface HistoryRowProps {
-  entry: DrawEntry;
-  onDecrypt: () => void;
-  decryptDisabled: boolean;
-}
-
-function HistoryRow({ entry, onDecrypt, decryptDisabled }: HistoryRowProps) {
-  // Helper to get rarity label (R / SR / SSR)
-  const getRarityLabel = () => {
-    if (entry.state !== 'decrypted') return entry.state;
-    const rarityKey = entry.rarity !== undefined ? rarityByCode[entry.rarity] : undefined;
-    return rarityKey || 'Unknown';
-  };
-
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-      <div className="flex items-center justify-between text-xs text-slate-400">
-        <span>Draw #{entry.drawId}</span>
-        <span>{new Date(entry.timestamp).toLocaleTimeString()}</span>
-      </div>
-      <p className="mt-2 font-mono text-[11px] text-amber-200 break-all">{entry.rarityHandle}</p>
-      <div className="mt-3 flex items-center justify-between text-sm text-slate-300">
-        <span className={entry.state === 'decrypted' ? 'font-semibold' : ''}>
-          {getRarityLabel()}
-        </span>
-        {entry.state !== 'decrypted' && (
-          <button
-            type="button"
-            className="text-xs text-amber-200"
-            onClick={onDecrypt}
-            disabled={entry.state === 'decrypting' || decryptDisabled}
-          >
-            {entry.state === 'encrypted' ? 'Decrypt' : 'Decrypting…'}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
 

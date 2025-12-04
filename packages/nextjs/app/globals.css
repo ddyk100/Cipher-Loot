@@ -116,28 +116,28 @@
     text-transform: uppercase;
     font-size: 0.875rem;
   }
-
+  
   .btn-muted:hover {
     @apply border-[#d4af37] bg-[#d4af37]/10 shadow-[0_6px_25px_rgba(212,175,55,0.3)];
   }
-
+  
   .badge {
     @apply inline-flex items-center gap-2 border border-[#d4af37]/50 bg-black/90 px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-[#d4af37];
     font-family: 'Cinzel', serif;
   }
-
+  
   .badge-ready {
     @apply border-[#d4af37] bg-[#d4af37]/10 text-[#f4d35e];
   }
-
+  
   .badge-loading {
     @apply border-[#cd7f32] bg-[#cd7f32]/10 text-[#cd7f32];
   }
-
+  
   .badge-error {
     @apply border-red-600 bg-red-900/20 text-red-400;
   }
-
+  
   .card-outline {
     @apply bg-gradient-to-b from-black/90 via-black/95 to-black/90;
     border-radius: 35% 65% 60% 40% / 50% 45% 55% 50%;
@@ -150,7 +150,7 @@
     box-shadow: 0 0 30px rgba(197, 227, 216, 0.15), inset 0 1px 0 rgba(212, 175, 55, 0.15);
     animation: morphing-small 15s ease-in-out infinite;
   }
-
+  
   @keyframes morphing-small {
     0%, 100% {
       border-radius: 35% 65% 60% 40% / 50% 45% 55% 50%;
@@ -170,18 +170,18 @@
       transform: scale(1);
     }
   }
-
+  
   .loot-grid {
     background-image: 
       repeating-linear-gradient(0deg, rgba(212, 175, 55, 0.05) 0px, transparent 1px, transparent 60px, rgba(212, 175, 55, 0.05) 61px),
       repeating-linear-gradient(90deg, rgba(212, 175, 55, 0.05) 0px, transparent 1px, transparent 60px, rgba(212, 175, 55, 0.05) 61px);
   }
-
+  
   .loot-chip {
     @apply border border-[#d4af37]/50 bg-black/80 px-4 py-1 text-xs font-bold uppercase tracking-[0.15em] text-[#d4af37];
     font-family: 'Cinzel', serif;
   }
-
+  
   .stat-pill {
     @apply border border-[#d4af37]/40 bg-black/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.15em] text-[#d4af37];
     font-family: 'Cinzel', serif;
@@ -192,7 +192,7 @@
   .noise-overlay {
     position: relative;
   }
-
+  
   .noise-overlay::after {
     content: '';
     position: absolute;
@@ -202,11 +202,11 @@
     pointer-events: none;
     mix-blend-mode: overlay;
   }
-
+  
   .baroque-ornament {
     position: relative;
   }
-
+  
   .baroque-ornament::before,
   .baroque-ornament::after {
     content: '❦';
@@ -220,7 +220,7 @@
     top: -0.5rem;
     left: -0.5rem;
   }
-
+  
   .baroque-ornament::after {
     bottom: -0.5rem;
     right: -0.5rem;
@@ -232,14 +232,14 @@
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-}
-
+  }
+  
 ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   border: 1px solid rgba(212, 175, 55, 0.1);
-}
-
+  }
+  
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, 
     rgba(212, 175, 55, 0.6) 0%, 
@@ -264,16 +264,16 @@
     0 0 20px rgba(212, 175, 55, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     inset 0 -1px 0 rgba(0, 0, 0, 0.4);
-}
-
+  }
+  
 ::-webkit-scrollbar-thumb:active {
   background: linear-gradient(180deg, 
     rgba(212, 175, 55, 1) 0%, 
     rgba(205, 127, 50, 1) 50%, 
     rgba(212, 175, 55, 1) 100%
   );
-}
-
+  }
+  
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
