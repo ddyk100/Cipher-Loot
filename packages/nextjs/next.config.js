@@ -6,14 +6,9 @@ const nextConfig = {
   experimental: {
     externalDir: true,
   },
-  // Turbopack config (Next.js 16 default bundler)
-  turbopack: {
-    resolveAlias: {
-      vue: false,
-    },
-    resolveExtensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-  },
-  // Webpack fallback for compatibility
+  // Empty turbopack config to acknowledge Next.js 16 default bundler
+  turbopack: {},
+  // Webpack fallback for compatibility (used with --webpack flag)
   webpack: (config) => {
     config.resolve.modules = [
       ...config.resolve.modules,
