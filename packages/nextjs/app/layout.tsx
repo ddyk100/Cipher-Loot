@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${playfairDisplay.variable} ${cinzel.variable} bg-black text-[#fffff0]`}>
-        <Script src="https://cdn.zama.org/relayer-sdk-js/0.3.0-5/relayer-sdk-js.umd.cjs" strategy="beforeInteractive" />
+        <Script src="https://cdn.zama.org/relayer-sdk-js/0.3.0-6/relayer-sdk-js.umd.cjs" strategy="beforeInteractive" />
         <div className="noise-overlay min-h-screen">{children}</div>
       </body>
     </html>
