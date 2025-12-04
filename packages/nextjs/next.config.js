@@ -6,19 +6,22 @@ const nextConfig = {
   experimental: {
     externalDir: true,
   },
-  webpack: (config, { isServer }) => {
-    // Ensure @fhevm-sdk can be resolved from parent directory
+  // Turbopack config (Next.js 16 default bundler)
+  turbopack: {
+    resolveAlias: {
+      vue: false,
+    },
+    resolveExtensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+  },
+  // Webpack fallback for compatibility
+  webpack: (config) => {
     config.resolve.modules = [
       ...config.resolve.modules,
       path.resolve(__dirname, '../../node_modules'),
     ];
-    
-    // Allow .js imports to resolve to .ts files (for @fhevm-sdk source)
     config.resolve.extensionAlias = {
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
     };
-    
-    // Ignore optional peer dependencies that are not used in this project
     config.resolve.fallback = {
       ...config.resolve.fallback,
       vue: false,
